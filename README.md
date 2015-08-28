@@ -1,35 +1,38 @@
 # Install
-- `cp bufferhint.vim ~/.vim/plugin/`
-- pathogen: `mkdir -p ~/.vim/bundle/bufferhint/plugin/` throw bufferhint.vim in that directory.
+Simply `cp bufferhint.vim ~/.vim/plugin/`.
 
-Add following two lines in your "~/.vimrc":
+Or if you use pathogen, just `mkdir -p ~/.vim/bundle/bufferhint/plugin/`, <br> and throw bufferhint.vim in that directory.
+
+After that, add following two lines in your "~/.vimrc":
+
     nnoremap - :call bufferhint#Popup()<CR>
     nnoremap \ :call bufferhint#LoadPrevious()<CR>
+Done.
 
 # Usage
-Basic usage:
+#### Basic usage:
 1. `vim foo.txt bar.txt doe.txt`
-1. Type `-` to popup bufferhint window
-1. Type `j/k/C-f/C-b/PGUP/PGDN` to navigate
-1. Type `ENTER` to load the buffer under cursor
+2. Type `-` to popup bufferhint window
+3. Type `j/k/C-f/C-b/PGUP/PGDN` to navigate
+4. Type `ENTER` to load the buffer under cursor
 
-Load buffer by hint:
+#### Load buffer by hint:
 1. `vim foo.txt bar.txt doe.txt`
-1. Type `-` to popup bufferhint window
-1. Type `b` to load "bar.txt"
-1. Type `\` to load the previous buffer namely "foo.txt"
+2. Type `-` to popup bufferhint window
+3. Type `b` to load "bar.txt"
+4. Type `\` to load the previous buffer namely "foo.txt"
 
-Switch sort mode:
+#### Switch sort mode:
 1. Type `-` to popup bufferhint window
-1. Type `SPACE` to switch sort mode
+2. Type `SPACE` to switch sort mode
 
-Delete buffers:
+#### Delete buffers:
 1. `vim foo.txt bar.txt doe.txt`
-1. Type `-` to popup bufferhint window
-1. Type `dd` to delete the buffer under cursor
-1. Type `db` to delete a buffer by hint
+2. Type `-` to popup bufferhint window
+3. Type `dd` to delete the buffer under cursor
+4. Type `db` to delete a buffer by hint
 
-Notes:
+#### Notes:
 - Yellow hints means the buffers are sorted by path, green hints means the buffers are sorted by LRU.
 - You can also type `/` in bufferhint window and search what you want, then type `ENTER` to load it.
 - Apparently `j/k/d/n/N` are excluded from the hint chars.
