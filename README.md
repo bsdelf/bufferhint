@@ -60,3 +60,6 @@ Page step, for `PGUP/PGDN/C-f/C-b`.
 - `g:bufferhint_SessionFile`
 Session file name.
 
+# Screenshot
+![bufferhint](https://github.com/bsdelf/bufferhint/raw/master/screenshot_1.png)
+
