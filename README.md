@@ -1,3 +1,6 @@
+# Description
+With this plugin, you can browse all buffers in a popup side window. In addition, this plugin provides a "hint key" for each buffer, just like what Vimperator/Vimium/VimFx does. Therefore, you can switch among buffers quickly with a single key stroke in the best case.
+
 # Install
 Simply `cp bufferhint.vim ~/.vim/plugin/`.
 
@@ -63,3 +66,5 @@ Session file name.
 # Screenshot
 ![bufferhint](https://github.com/bsdelf/bufferhint/raw/master/screenshot_1.png)
 
+# One More Thing
+If you like this plugin, please rate ![it](http://www.vim.org/scripts/script.php?script_id=5272)!
