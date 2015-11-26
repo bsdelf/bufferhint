@@ -67,4 +67,4 @@ Session file name.
 ![bufferhint](https://github.com/bsdelf/bufferhint/raw/master/screenshot_1.png)
 
 # One More Thing
-If you like this plugin, please rate ![it](http://www.vim.org/scripts/script.php?script_id=5272)!
+If you like this plugin, please rate it [here](http://www.vim.org/scripts/script.php?script_id=5272)!
