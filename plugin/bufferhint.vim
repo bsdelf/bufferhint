@@ -56,7 +56,7 @@ let s:MyName = fnameescape("[buffers]")
 
 " toggle buffer hint
 fu! bufferhint#Popup()
-    if bufexists(bufnr(s:MyName))
+    if bufloaded(bufnr(s:MyName))
         exe 'bwipeout ' . bufnr(s:MyName)
         return
     endif
