@@ -63,6 +63,9 @@ Page step, for `PGUP/PGDN/C-f/C-b`.
 - `g:bufferhint_SessionFile`
 Session file name.
 
+- `g:bufferhint_KeepWindow`
+Keep window after using `d` to delete buffer if it's been set to 1.
+
 # Screenshot
 ![bufferhint](https://github.com/bsdelf/bufferhint/raw/master/screenshot_1.png)
 
