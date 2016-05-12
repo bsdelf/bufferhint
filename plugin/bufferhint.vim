@@ -30,6 +30,10 @@ if !exists('g:bufferhint_SessionFile')
     let g:bufferhint_SessionFile = 'session.vim'
 endif
 
+if !exists('g:bufferhint_BufferName')
+    let g:bufferhint_BufferName = '::buffers::'
+endif
+
 if !exists('g:bufferhint_KeepWindow')
 	let g:bufferhint_KeepWindow = 0
 endif
@@ -56,7 +60,7 @@ let s:ReservedSpace = 2+2+1+2+1
 let s:CursorLine = line(".")
 
 " buffer's name
-let s:MyName = fnameescape("[buffers]")
+let s:MyName = fnameescape(g:bufferhint_BufferName)
 
 " toggle buffer hint
 fu! bufferhint#Popup()
