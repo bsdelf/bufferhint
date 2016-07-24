@@ -305,6 +305,12 @@ fu! s:FormatPath(bid, path)
     return path
 endfu
 
+fu! s:IsBadTypeBuffer(bid)
+    let badtypes = ['help', 'quickfix']
+    let buftype = getbufvar(a:bid, '&buftype')
+    return index(badtypes, buftype) >= 0
+endfu
+
 fu! s:SortedByPath()
     let crntbuf = bufnr('')
     let lastbuf = bufnr('$')
@@ -316,7 +322,7 @@ fu! s:SortedByPath()
     let pathidmap = {}
     let maxpath = 0
     for bid in range(1, lastbuf)
-        if !buflisted(bid) | continue | endif
+        if !buflisted(bid) || s:IsBadTypeBuffer(bid) | continue | endif
         let path = s:RelativeFilePath(bufname(bid))
         let pathidmap[path] = bid
         let len = strlen(path)
@@ -360,7 +366,7 @@ fu! s:SortedByLRU()
     let idpathmap = {}
     let maxpath = 0
     for bid in lrulst
-        if !buflisted(bid) | continue | endif
+        if !buflisted(bid) || s:IsBadTypeBuffer(bid) | continue | endif
         let path = s:RelativeFilePath(bufname(bid))
         let idpathmap[bid] = path
         let len = strlen(path)
@@ -399,7 +405,7 @@ fu! s:UpdateLRU()
     if empty(lrulst)
         for bid in range(1, lastbuf)
             " this may happen
-            if buflisted(bid)
+            if buflisted(bid) && !s:IsBadTypeBuffer(bid)
                 call add(lrulst, bid)
             endif
         endfor
@@ -413,7 +419,9 @@ fu! s:UpdateLRU()
     endif
     " track new buffers
     for bid in range(1, lastbuf)
-        if buflisted(bid) && index(lrulst, bid) < 0
+        if buflisted(bid) 
+            \&& !s:IsBadTypeBuffer(bid)
+            \&& index(lrulst, bid) < 0
             call insert(lrulst, bid, 0)
         endif
     endfor
