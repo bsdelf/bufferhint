@@ -486,7 +486,7 @@ fu! bufferhint#LoadByCursor()
     call s:LoadByIndex(idx)
 endfu
 
-fu bufferhint#LoadPrevious()
+fu! bufferhint#LoadPrevious()
     let curmode = g:bufferhint_SortMode
     let g:bufferhint_SortMode = 1
     call s:UpdateLRU()
