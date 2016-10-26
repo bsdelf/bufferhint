@@ -1,5 +1,6 @@
 "-------------------------------------------------------------------------------"
-"   bufferhint 1.0, Copyright(c) 2015, Yanhui Shen <shen.elf@gmail.com>         "
+"   bufferhint 1.1.1                                                            "
+"   Copyright(c) 2016, Yanhui Shen <shen.elf@gmail.com>                         "
 "   * Inspired by Robert Lillack's BUFFER LIST                                  "
 "   * Sort mode: Path & LRU                                                     "
 "-------------------------------------------------------------------------------"
