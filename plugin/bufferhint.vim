@@ -15,6 +15,10 @@
 ""let g:bufferhintLoaded = 1
 
 " 0=path, 1=lru
+if !exists("g:bufferhint_FullPath")
+    let g:bufferhint_FullPath = 1
+endif
+
 if !exists("g:bufferhint_SortMode")
     let g:bufferhint_SortMode = 0
 endif
@@ -324,7 +328,12 @@ fu! s:SortedByPath()
     let maxpath = 0
     for bid in range(1, lastbuf)
         if !buflisted(bid) || s:IsBadTypeBuffer(bid) | continue | endif
-        let path = s:RelativeFilePath(bufname(bid))
+            if g:bufferhint_FullPath == 1
+                let path = s:RelativeFilePath(bufname(bid))
+                let path = bufname(bid)
+            else
+            let path = fnamemodify(bufname(bid), ":t")
+        endif
         let pathidmap[path] = bid
         let len = strlen(path)
         if (len > maxpath)
@@ -709,8 +718,8 @@ fu! s:RelativeFilePath(bname)
     if !filereadable(a:bname)
         return "#" . a:bname . "#"
     endif
-    let fullpath = fnamemodify(a:bname, ":p") 
-    let workpath = fnamemodify(getcwd(), ":p") 
+    let fullpath = fnamemodify(a:bname, ":t") 
+    let workpath = fnamemodify(getcwd(), ":t") 
     let relpath = strpart(fullpath, strlen(matchstr(fullpath, workpath, 0)))
     return relpath
 endfu
