@@ -95,7 +95,7 @@ fu! bufferhint#Popup()
     setlocal noshowcmd
     setlocal noswapfile
     setlocal buftype=nofile
-    setlocal bufhidden=delete
+    setlocal bufhidden=wipe
     setlocal nobuflisted
     setlocal nomodifiable
     setlocal nowrap
