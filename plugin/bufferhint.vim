@@ -106,14 +106,16 @@ fu! bufferhint#Popup()
         sy clear
         sy match KeyHint /^../
         sy match AtHint /@/
-        hi clear KeyHint
-        hi def AtHint ctermfg=red
-        let mode = g:bufferhint_SortMode
-        if mode == 0
-            hi def KeyHint ctermfg=yellow
-        elseif mode == 1
-            hi def KeyHint ctermfg=green
-        endif
+		if !get(g:, 'bufferhint_CustomHighlight', '')
+			hi clear KeyHint
+			hi def AtHint ctermfg=red
+			let mode = g:bufferhint_SortMode
+			if mode == 0
+				hi def KeyHint ctermfg=yellow
+			elseif mode == 1
+				hi def KeyHint ctermfg=green
+			endif
+		endif
     endif
 
     " set content
@@ -312,9 +314,22 @@ fu! s:IsBadTypeBuffer(bid)
     return index(badtypes, buftype) >= 0
 endfu
 
+fu! s:ListBuffer()
+    redir => buflist
+    silent! ls
+    redir END
+    let bids = []
+    for curline in split(buflist, '\n')
+        if curline =~ '^\s*\d\+'
+            let bid = str2nr(matchstr(curline, '^\s*\zs\d\+'))
+			let bids += [bid]
+        endif
+    endfor
+    return bids
+endfu
+
 fu! s:SortedByPath()
     let crntbuf = bufnr('')
-    let lastbuf = bufnr('$')
 
     let content = ""
     let pathbids = []
@@ -322,7 +337,7 @@ fu! s:SortedByPath()
     " build path-bid map
     let pathidmap = {}
     let maxpath = 0
-    for bid in range(1, lastbuf)
+    for bid in s:ListBuffer()
         if !buflisted(bid) || s:IsBadTypeBuffer(bid) | continue | endif
         let path = s:RelativeFilePath(bufname(bid))
         let pathidmap[path] = bid
@@ -401,10 +416,10 @@ endfu
 
 fu! s:UpdateLRU()
     let lrulst = s:LRUBids
-    let lastbuf = bufnr('$')
+    let bids = s:ListBuffer()
     " initialize
     if empty(lrulst)
-        for bid in range(1, lastbuf)
+        for bid in bids
             " this may happen
             if buflisted(bid) && !s:IsBadTypeBuffer(bid)
                 call add(lrulst, bid)
@@ -419,7 +434,7 @@ fu! s:UpdateLRU()
         "call sort(lrulst, "s:bufcmp")
     endif
     " track new buffers
-    for bid in range(1, lastbuf)
+    for bid in bids
         if buflisted(bid) 
             \&& !s:IsBadTypeBuffer(bid)
             \&& index(lrulst, bid) < 0
@@ -512,7 +527,14 @@ fu! s:LoadByIndex(idx)
     if bufexists(bufnr(s:MyName))
         exe 'bwipeout ' . bufnr(s:MyName)
     endif
-    exe "b " . bid
+	try
+		exe "b " . bid
+	catch /^Vim\%((\a\+)\)\=:E37/
+		let pos = stridx(v:exception, ':E')
+		echohl ErrorMsg
+		echo (pos >= 0)? strpart(v:exception, pos + 1) : v:exception
+		echohl None
+	endtry
 endfu
 
 "--------------------------------------------
@@ -690,8 +712,7 @@ fu! s:GetLRUFiles()
     let bids = s:LRUBids
     if empty(bids)
         let crntbuf = bufnr('')
-        let lastbuf = bufnr('$')
-        let bids = range(1, lastbuf)
+        let bids = s:ListBuffer()
     endif
 
     for bid in bids
