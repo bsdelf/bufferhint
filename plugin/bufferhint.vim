@@ -100,6 +100,7 @@ fu! bufferhint#Popup()
     setlocal nomodifiable
     setlocal nowrap
     setlocal nonumber
+	setlocal filetype=bufferhint
 
     " syntax highlighting
     if has("syntax")
