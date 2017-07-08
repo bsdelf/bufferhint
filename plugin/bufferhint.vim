@@ -36,7 +36,7 @@ if !exists('g:bufferhint_BufferName')
 endif
 
 if !exists('g:bufferhint_KeepWindow')
-	let g:bufferhint_KeepWindow = 0
+    let g:bufferhint_KeepWindow = 0
 endif
 
 " if window height changed,
@@ -106,16 +106,16 @@ fu! bufferhint#Popup()
         sy clear
         sy match KeyHint /^../
         sy match AtHint /@/
-		if !get(g:, 'bufferhint_CustomHighlight', '')
-			hi clear KeyHint
-			hi def AtHint ctermfg=red
-			let mode = g:bufferhint_SortMode
-			if mode == 0
-				hi def KeyHint ctermfg=yellow
-			elseif mode == 1
-				hi def KeyHint ctermfg=green
-			endif
-		endif
+        if !get(g:, 'bufferhint_CustomHighlight', '')
+            hi clear KeyHint
+            hi def AtHint ctermfg=red
+            let mode = g:bufferhint_SortMode
+            if mode == 0
+                hi def KeyHint ctermfg=yellow
+            elseif mode == 1
+                hi def KeyHint ctermfg=green
+            endif
+        endif
     endif
 
     " set content
@@ -322,7 +322,7 @@ fu! s:ListBuffer()
     for curline in split(buflist, '\n')
         if curline =~ '^\s*\d\+'
             let bid = str2nr(matchstr(curline, '^\s*\zs\d\+'))
-			let bids += [bid]
+            let bids += [bid]
         endif
     endfor
     return bids
@@ -527,14 +527,14 @@ fu! s:LoadByIndex(idx)
     if bufexists(bufnr(s:MyName))
         exe 'bwipeout ' . bufnr(s:MyName)
     endif
-	try
-		exe "b " . bid
-	catch /^Vim\%((\a\+)\)\=:E37/
-		let pos = stridx(v:exception, ':E')
-		echohl ErrorMsg
-		echo (pos >= 0)? strpart(v:exception, pos + 1) : v:exception
-		echohl None
-	endtry
+    try
+        exe "b " . bid
+    catch /^Vim\%((\a\+)\)\=:E37/
+        let pos = stridx(v:exception, ':E')
+        echohl ErrorMsg
+        echo (pos >= 0)? strpart(v:exception, pos + 1) : v:exception
+        echohl None
+    endtry
 endfu
 
 "--------------------------------------------
