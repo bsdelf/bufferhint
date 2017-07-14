@@ -101,7 +101,9 @@ fu! bufferhint#Popup()
     setlocal nowrap
     setlocal nonumber
     setlocal filetype=bufferhint
-	setlocal signcolumn=no
+	if has('patch-7.4.2210')
+		setlocal signcolumn=no
+	endif
 
     " syntax highlighting
     if has("syntax")
